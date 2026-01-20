@@ -1,11 +1,51 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dhodia Language App</title>
+    <title>Dhodia Language Assistant</title>
+    <meta charset="UTF-8">
   </head>
   <body>
-    <h1>Welcome to Dhodia Language App</h1>
-    <p>This site is under development.</p>
-    <p>Dhodia language preservation & learning.</p>
+    <h2>Dhodia Language Assistant</h2>
+
+    <p>Type in Gujarati / English:</p>
+
+    <textarea id="userInput" rows="4" cols="60"
+      placeholder="Example: હું ઘરે છું"></textarea>
+    <br><br>
+
+    <button onclick="sendMessage()">Send</button>
+
+    <h3>Response:</h3>
+    <pre id="responseBox"></pre>
+
+    <script>
+      async function sendMessage() {
+        const message = document.getElementById("userInput").value;
+        const responseBox = document.getElementById("responseBox");
+
+        if (!message.trim()) {
+          responseBox.textContent = "Please type something.";
+          return;
+        }
+
+        responseBox.textContent = "Thinking...";
+
+        try {
+          const res = await fetch("/api/chat", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ message })
+          });
+
+          const data = await res.json();
+          responseBox.textContent = data.reply || data.error;
+
+        } catch (error) {
+          responseBox.textContent = "Error: " + error.message;
+        }
+      }
+    </script>
   </body>
 </html>
