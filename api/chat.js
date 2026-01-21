@@ -1,22 +1,8 @@
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Only POST requests allowed" });
-  }
+// ================================
+// DHODIA REFERENCE: SENTENCE PATTERNS
+// ================================
 
-  try {
-    const { message } = req.body;
-
-    if (!message) {
-      return res.status(400).json({ error: "Message is required" });
-    }
-
-const systemPrompt = `
-You are a Dhodia language teacher and language preserver.
-You must strictly follow the Dhodia sentence patterns given below.
-Use these patterns as the primary reference.
-If unsure, say "local variation exists".
-Do NOT invent new sentence styles.
-
+const SENTENCE_PATTERNS = `
 REFERENCE DHODIA PATTERNS:
 
 Pattern 1:
@@ -88,6 +74,151 @@ Dhodia: {X} બોલની કા
 Example:
 Gujarati: જહલી બોલી કે
 Dhodia: જહલી બોલની કા
+
+Use these patterns strictly.
+Do not invent new sentence structures.
+`;
+
+// ================================
+// DHODIA REFERENCE: NUMBERS
+// ================================
+
+const NUMBER_REFERENCE = `
+Numbers (Gujarati → Numeric value):
+
+એક = 1
+બે = 2
+તીન = 3
+ચાર = 4
+પાચ = 5
+છ = 6
+હાત = 7
+આઠ = 8
+નવ = 9
+દહ = 10
+અગ્યાર = 11
+બાર = 12
+તેર = 13
+ચવુદ = 14
+પંદાર = 15
+હોલ = 16
+હત્તાર = 17
+અરાઢ = 18
+ઓગણીક = 19
+વીહ = 20
+એકવીહ = 21
+બાવીહ = 22
+તેવીહ = 23
+ચોવીહ = 24
+પચ્ચીહ = 25
+છવ્વીહ = 26
+હત્તાવીહ = 27
+અઠ્ઠાવીહ = 28
+ઓગણતીહ = 29
+તીહ = 30
+એકત્રી = 31
+બત્રી = 32
+તૈત્રી = 33
+ચોત્રી = 34
+પાત્રી = 35
+છત્રી = 36
+હાડત્રી = 37
+આડત્રી = 38
+ઓગણચાલી = 39
+ચાલીહ = 40
+એકતાલી = 41
+બેતાલી = 42
+તૈતાલી = 43
+ચુમ્માલી = 44
+પીસ્તાલી = 45
+છૈતાલી = 46
+હુડતાલી = 47
+અડતાલી = 48
+ઓગણપચા = 49
+પચા = 50
+એકાવન = 51
+બવન = 52
+તેપ્પન = 53
+ચોપ્પન = 54
+પંચાવન = 55
+છપ્પન = 56
+હત્તાવન = 57
+અઠાવન = 58
+ઓગણહાટ = 59
+હાટ = 60
+એકહટ = 61
+બેહટ = 62
+તૈહટ = 63
+ચોહટ = 64
+પાહટ = 65
+છોહટ = 66
+હડહટ = 67
+અડહટ = 68
+ઓગણાહીત્તેર = 69
+હીત્તેર = 70
+એકોતેર = 71
+બેનેર = 72
+તોતેર = 73
+ચમોતેર = 74
+પચ્ચોતેર = 75
+છોતેર = 76
+હીત્તોતેર = 77
+ઇઠ્ઠોતેર = 78
+ઓગણાએહી = 79
+એહી = 80
+એકયાંહી = 81
+બ્યાંહી = 82
+ત્યાંહી = 83
+ચોર્યાહી = 84
+પંચ્યાંહી = 85
+છયાંહી = 86
+હત્યાંહી = 87
+અઠયાહી = 88
+નેવચાંહી = 89
+નેવું = 90
+એકાણું = 91
+બાણું = 92
+તાણું = 93
+ચેરાણું = 94
+પંચાણ = 95
+છણુ = 96
+હત્તાણું = 97
+અઠાણ = 98
+નવ્વાણું = 99
+હો = 100
+એક અજાર = 1000
+એક લાખ = 100000
+એક કરોડ = 10000000
+એક અબાજ = 1000000000
+
+When numbers appear:
+- Understand the numeric value
+- Keep Dhodia spoken form natural
+`;
+
+
+export default async function handler(req, res) {
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Only POST requests allowed" });
+  }
+
+  try {
+    const { message } = req.body;
+
+    if (!message) {
+      return res.status(400).json({ error: "Message is required" });
+    }
+
+const systemPrompt = `
+You are a Dhodia language teacher and language preserver.
+You must strictly follow the Dhodia sentence patterns given below.
+Use these patterns as the primary reference.
+If unsure, say "local variation exists".
+Do NOT invent new sentence styles.
+
+${SENTENCE_PATTERNS}
+
+${NUMBER_REFERENCE}
 
 Always reply in this exact format:
 
