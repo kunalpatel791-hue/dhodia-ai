@@ -227,7 +227,7 @@ Gujarati:
 English:
 `;
 
-const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+const openaiResponse = await fetch("https://api.openai.com/v1/responses", {
   method: "POST",
   headers: {
     "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
@@ -235,33 +235,32 @@ const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions",
   },
   body: JSON.stringify({
     model: "gpt-5.2-mini",
-    messages: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: message }
-    ],
-    temperature: 0.3
+    input: [
+      {
+        role: "system",
+        content: systemPrompt
+      },
+      {
+        role: "user",
+        content: message
+      }
+    ]
   })
 });
 
 const data = await openaiResponse.json();
 
-// 🔎 DEBUG: show OpenAI error clearly
 if (!openaiResponse.ok) {
   console.error("OpenAI error:", data);
-  return res.status(500).json({
-    error: "OpenAI request failed",
-    details: data
-  });
+  return res.status(500).json({ error: "OpenAI request failed", details: data });
 }
 
-const reply = data.choices?.[0]?.message?.content;
+// 👇 correct extraction for Responses API
+const reply = data.output_text?.[0];
 
 if (!reply) {
-  console.error("No reply object:", data);
-  return res.status(500).json({
-    error: "No response from OpenAI",
-    details: data
-  });
+  console.error("No reply:", data);
+  return res.status(500).json({ error: "No response from OpenAI", details: data });
 }
 
 res.status(200).json({ reply });
