@@ -236,31 +236,39 @@ const openaiResponse = await fetch("https://api.openai.com/v1/responses", {
   body: JSON.stringify({
     model: "gpt-5.2-mini",
     input: [
-      {
-        role: "system",
-        content: systemPrompt
-      },
-      {
-        role: "user",
-        content: message
-      }
+      { role: "system", content: systemPrompt },
+      { role: "user", content: message }
     ]
   })
 });
 
-const data = await openaiResponse.json();
+// ✅ Read raw text first
+const raw = await openaiResponse.text();
 
+let data;
+try {
+  data = JSON.parse(raw);
+} catch (e) {
+  console.error("Non-JSON response from OpenAI:", raw);
+  return res.status(500).json({
+    error: "OpenAI returned non-JSON response",
+    details: raw.slice(0, 500)
+  });
+}
+
+// ✅ Show real OpenAI errors
 if (!openaiResponse.ok) {
-  console.error("OpenAI error:", data);
-  return res.status(500).json({ error: "OpenAI request failed", details: data });
+  console.error("OpenAI API error:", data);
+  return res.status(500).json({
+    error: "OpenAI request failed",
+    details: data
+  });
 }
 
-// 👇 correct extraction for Responses API
-const reply = data.output_text?.[0];
-
-if (!reply) {
-  console.error("No reply:", data);
-  return res.status(500).json({ error: "No response from OpenAI", details: data });
-}
+// ✅ Extract reply safely from Responses API
+const reply =
+  data.output?.[0]?.content?.[0]?.text ||
+  data.output_text?.[0] ||
+  "No reply text found";
 
 res.status(200).json({ reply });
