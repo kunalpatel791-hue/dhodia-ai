@@ -242,7 +242,7 @@ const openaiResponse = await fetch("https://api.openai.com/v1/responses", {
   })
 });
 
-// ✅ Read raw text first
+//Read raw text first
 const raw = await openaiResponse.text();
 
 let data;
@@ -256,7 +256,7 @@ try {
   });
 }
 
-// ✅ Show real OpenAI errors
+//Show real OpenAI errors
 if (!openaiResponse.ok) {
   console.error("OpenAI API error:", data);
   return res.status(500).json({
@@ -265,7 +265,7 @@ if (!openaiResponse.ok) {
   });
 }
 
-// ✅ Extract reply safely from Responses API
+//Extract reply safely from Responses API
 const reply =
   data.output?.[0]?.content?.[0]?.text ||
   data.output_text?.[0] ||
