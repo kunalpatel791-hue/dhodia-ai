@@ -227,34 +227,41 @@ Gujarati:
 English:
 `;
 
+const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+  method: "POST",
+  headers: {
+    "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    model: "gpt-5.2-mini",
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: message }
+    ],
+    temperature: 0.3
+  })
+});
 
-    const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        model: "gpt-5.2-mini",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: message }
-        ],
-        temperature: 0.3
-      })
-    });
+const data = await openaiResponse.json();
 
-    const data = await openaiResponse.json();
-
-    const reply = data.choices?.[0]?.message?.content;
-
-    if (!reply) {
-      return res.status(500).json({ error: "No response from OpenAI" });
-    }
-
-    res.status(200).json({ reply });
-
-  } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
+// 🔎 DEBUG: show OpenAI error clearly
+if (!openaiResponse.ok) {
+  console.error("OpenAI error:", data);
+  return res.status(500).json({
+    error: "OpenAI request failed",
+    details: data
+  });
 }
+
+const reply = data.choices?.[0]?.message?.content;
+
+if (!reply) {
+  console.error("No reply object:", data);
+  return res.status(500).json({
+    error: "No response from OpenAI",
+    details: data
+  });
+}
+
+res.status(200).json({ reply });
