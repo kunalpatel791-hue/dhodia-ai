@@ -1,274 +1,61 @@
-// ================================
-// DHODIA REFERENCE: SENTENCE PATTERNS
-// ================================
-
-const SENTENCE_PATTERNS = `
-REFERENCE DHODIA PATTERNS:
-
-Pattern 1:
-Gujarati: એક {X} ને {Y}
-Dhodia: એક {X}યે {Y}
-Example:
-Gujarati: એક રાજાને સાત રાણી
-Dhodia: એક રાજાયે હાત રાણીયા
-
-Pattern 2:
-Gujarati: છ {X} અને એક {Y}
-Dhodia: છ {X} ને એક {Y}
-Example:
-Gujarati: છ માનીતી અને એક અણમાનીતી
-Dhodia: છ માનીત્યા ને એક અળખામણી
-
-Pattern 3:
-Gujarati: {X} નું ઘરબાર પણ જુદું જ
-Dhodia: {X} ઘરબાર પુણ જુદાં જ
-Example:
-Gujarati: અણમાનીતી રાણીનું ઘરબાર પણ જુદું જ
-Dhodia: અળખામણી રાણીયા ઘરબાર પુણ જુદાં જ
-
-Pattern 4:
-Gujarati: {X} નો વ્યવહાર પણ નહીં મળે
-Dhodia: {X} નો વેવાર પુણ નાંય મેળે
-Example:
-Gujarati: બોલચાલનો વ્યવહાર પણ નહીં મળે
-Dhodia: બોલુનાં ચાલુનો વેવાર પુણ નાંય મેળે
-
-Pattern 5:
-Gujarati: {X} અને {Y} બંને સાથે રહે
-Dhodia: {X} ને {Y} બેજ હાથે રય
-Example:
-Gujarati: રાણી અને તેની દાસી બંને સાથે રહે
-Dhodia: રાણી ને તીણી દાસી બેજ હાથે રય
-
-Pattern 6:
-Gujarati: એમ કરતાં કરતાં {સમય} નીકળી ગયા
-Dhodia: અહાં કરતાં કરતાં {સમય} ગુવા
-Example:
-Gujarati: એમ કરતાં કરતાં ઘણા દિવસો નીકળી ગયા
-Dhodia: અહાં કરતાં કરતાં બો દીહ નીંઘી ગુવા
-
-Pattern 7:
-Gujarati: એક દિવસ {X} {કામ} નીકળ્યો
-Dhodia: એક દીહ {X} {કામ} નીંઘનો
-Example:
-Gujarati: એક દિવસ રાજા સવારમાં ફરવા નીકળ્યો
-Dhodia: એક દીહ રાજા હવારાંમાં ફિરુંલાગ નીંઘનો
-
-Pattern 8:
-Gujarati: {X} પાસે {વસ્તુ} નહીં મળે
-Dhodia: {X} પાહે {વસ્તુ} નાંય મેળે
-Example:
-Gujarati: જહલીની પાસે જમીન નહીં મળે
-Dhodia: જહલીચે પાહે ભૂંચ નાંય મેળે
-
-Pattern 9:
-Gujarati: {X} એ પૂછ્યું
-Dhodia: {X} એ પૂંચસાં
-Example:
-Gujarati: રાજાએ પૂછ્યું
-Dhodia: રાજેં પૂંચસાં
-
-Pattern 10:
-Gujarati: {X} બોલી કે
-Dhodia: {X} બોલની કા
-Example:
-Gujarati: જહલી બોલી કે
-Dhodia: જહલી બોલની કા
-
-Use these patterns strictly.
-Do not invent new sentence structures.
-`;
-
-// ================================
-// DHODIA REFERENCE: NUMBERS
-// ================================
-
-const NUMBER_REFERENCE = `
-Numbers (Gujarati → Numeric value):
-
-એક = 1
-બે = 2
-તીન = 3
-ચાર = 4
-પાચ = 5
-છ = 6
-હાત = 7
-આઠ = 8
-નવ = 9
-દહ = 10
-અગ્યાર = 11
-બાર = 12
-તેર = 13
-ચવુદ = 14
-પંદાર = 15
-હોલ = 16
-હત્તાર = 17
-અરાઢ = 18
-ઓગણીક = 19
-વીહ = 20
-એકવીહ = 21
-બાવીહ = 22
-તેવીહ = 23
-ચોવીહ = 24
-પચ્ચીહ = 25
-છવ્વીહ = 26
-હત્તાવીહ = 27
-અઠ્ઠાવીહ = 28
-ઓગણતીહ = 29
-તીહ = 30
-એકત્રી = 31
-બત્રી = 32
-તૈત્રી = 33
-ચોત્રી = 34
-પાત્રી = 35
-છત્રી = 36
-હાડત્રી = 37
-આડત્રી = 38
-ઓગણચાલી = 39
-ચાલીહ = 40
-એકતાલી = 41
-બેતાલી = 42
-તૈતાલી = 43
-ચુમ્માલી = 44
-પીસ્તાલી = 45
-છૈતાલી = 46
-હુડતાલી = 47
-અડતાલી = 48
-ઓગણપચા = 49
-પચા = 50
-એકાવન = 51
-બવન = 52
-તેપ્પન = 53
-ચોપ્પન = 54
-પંચાવન = 55
-છપ્પન = 56
-હત્તાવન = 57
-અઠાવન = 58
-ઓગણહાટ = 59
-હાટ = 60
-એકહટ = 61
-બેહટ = 62
-તૈહટ = 63
-ચોહટ = 64
-પાહટ = 65
-છોહટ = 66
-હડહટ = 67
-અડહટ = 68
-ઓગણાહીત્તેર = 69
-હીત્તેર = 70
-એકોતેર = 71
-બેનેર = 72
-તોતેર = 73
-ચમોતેર = 74
-પચ્ચોતેર = 75
-છોતેર = 76
-હીત્તોતેર = 77
-ઇઠ્ઠોતેર = 78
-ઓગણાએહી = 79
-એહી = 80
-એકયાંહી = 81
-બ્યાંહી = 82
-ત્યાંહી = 83
-ચોર્યાહી = 84
-પંચ્યાંહી = 85
-છયાંહી = 86
-હત્યાંહી = 87
-અઠયાહી = 88
-નેવચાંહી = 89
-નેવું = 90
-એકાણું = 91
-બાણું = 92
-તાણું = 93
-ચેરાણું = 94
-પંચાણ = 95
-છણુ = 96
-હત્તાણું = 97
-અઠાણ = 98
-નવ્વાણું = 99
-હો = 100
-એક અજાર = 1000
-એક લાખ = 100000
-એક કરોડ = 10000000
-એક અબાજ = 1000000000
-
-When numbers appear:
-- Understand the numeric value
-- Keep Dhodia spoken form natural
-`;
-
-
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Only POST requests allowed" });
-  }
-
   try {
-    const { message } = req.body;
-
-    if (!message) {
-      return res.status(400).json({ error: "Message is required" });
+    if (req.method !== "POST") {
+      return res.status(405).json({ error: "Only POST requests allowed" });
     }
 
-const systemPrompt = `
-You are a native Dhodia speaker having a natural conversation.
+    const { message } = req.body || {};
 
-Use the Dhodia patterns and words given below.
-Do not translate literally from Gujarati.
-Speak naturally in Dhodia style.
+    if (!message) {
+      return res.status(400).json({ error: "Message missing" });
+    }
 
-${SENTENCE_PATTERNS}
+    // 🔹 Send request to OpenAI
+    const openaiResponse = await fetch("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: "gpt-5.2-mini",
+        input: message
+      })
+    });
 
-${NUMBER_REFERENCE}
+    // 🔹 Read raw text first (prevents JSON crash)
+    const raw = await openaiResponse.text();
 
-Always reply in this exact format:
+    let data;
+    try {
+      data = JSON.parse(raw);
+    } catch {
+      console.error("Non-JSON response:", raw);
+      return res.status(500).json({
+        error: "OpenAI returned non-JSON response",
+        raw
+      });
+    }
 
-Dhodia:
-Gujarati:
-English:
-`;
+    // 🔹 If OpenAI returned error
+    if (!openaiResponse.ok) {
+      console.error("OpenAI API error:", data);
+      return res.status(500).json({
+        error: "OpenAI request failed",
+        details: data
+      });
+    }
 
-const openaiResponse = await fetch("https://api.openai.com/v1/responses", {
-  method: "POST",
-  headers: {
-    "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
-    "Content-Type": "application/json"
-  },
-  body: JSON.stringify({
-    model: "gpt-5.2-mini",
-    input: [
-      { role: "system", content: systemPrompt },
-      { role: "user", content: message }
-    ]
-  })
-});
+    // 🔹 Extract reply safely
+    const reply =
+      data.output?.[0]?.content?.[0]?.text ||
+      data.output_text?.[0] ||
+      "No reply found";
 
-//Read raw text first
-const raw = await openaiResponse.text();
+    return res.status(200).json({ reply });
 
-let data;
-try {
-  data = JSON.parse(raw);
-} catch (e) {
-  console.error("Non-JSON response from OpenAI:", raw);
-  return res.status(500).json({
-    error: "OpenAI returned non-JSON response",
-    details: raw.slice(0, 500)
-  });
+  } catch (err) {
+    console.error("Server error:", err);
+    return res.status(500).json({ error: err.message });
+  }
 }
-
-//Show real OpenAI errors
-if (!openaiResponse.ok) {
-  console.error("OpenAI API error:", data);
-  return res.status(500).json({
-    error: "OpenAI request failed",
-    details: data
-  });
-}
-
-//Extract reply safely from Responses API
-const reply =
-  data.output?.[0]?.content?.[0]?.text ||
-  data.output_text?.[0] ||
-  "No reply text found";
-
-res.status(200).json({ reply });
